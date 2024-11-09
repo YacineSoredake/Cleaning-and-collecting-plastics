@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const path = require("path");
 const authRoute = require("./routes/authRouter")
 const markerRoute = require("./routes/markerRouter")
+const SpotRoute = require("./routes/spotRouter")
 
 const app = express();
 const server = http.createServer(app);
@@ -22,6 +23,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use('/',authRoute);
 app.use('/',markerRoute);
+app.use('/',SpotRoute);
 
 app.get("/", (request, response) => {
     response.redirect("/public/views/signIn.html");

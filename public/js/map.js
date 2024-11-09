@@ -113,14 +113,19 @@ function addMarkerToMap(marker) {
     const markerInstance = L.marker(leafletCoordinates, { icon: markerIcon }).addTo(map);
     
     markerInstance.bindPopup(`
-        <b>added on:</b> ${addedAt}<br>
-        <b>Quantity:</b> ${quantity}<br>
-        <b>Price:</b> $${price}<br>
-        <b>Status:</b> ${status}<br>
-        <b>Availability:</b> ${borrowedBy}<br>
-        <img src="${imageUrl}" alt="Image" width="100px" height="100px">
-        <br><a href="/spot/${id}">Check spot</a>
+        <div class="p-3 max-w-xs rounded-lg shadow-lg bg-lightgreen text-gray-800">
+            <p class="font-semibold text-lg">Added on: <span class="font-normal">${addedAt}</span></p>
+            <p><b>Quantity:</b> <span class="font-medium">${quantity}</span></p>
+            <p><b>Price:</b> <span class="font-medium text-green-600">${price} DZ</span></p>
+            <p><b>Status:</b> <span class="font-medium ${status === 'Available' ? 'text-green-500' : 'text-red-500'}">${status}</span></p>
+            <p><b>Availability:</b> <span class="font-medium">${borrowedBy}</span></p>
+            <div class="my-2">
+                <img src="${imageUrl}" alt="Image" class="w-full h-24 object-cover rounded-md">
+            </div>
+            <a href="./spot.html?id=${id}" class="text-blue-500 hover:underline">Check spot</a>
+        </div>
     `);
+    
 }
 
 
