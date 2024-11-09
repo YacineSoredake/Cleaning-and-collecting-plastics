@@ -1,0 +1,59 @@
+.color-red{
+color: rgb(253, 94, 83);
+}
+.bg-red{
+    background-color: rgb(253, 94, 83);
+}
+.color-white{
+    color:#F9FCFB
+    }
+.bg-white{
+    background-color :#F9FCFB
+}
+.color-green{
+    color: #21BF73
+}
+.bg-green{
+    background-color: #21BF73
+}
+.color-lightgreen{
+    color:#B0EACD
+}
+.bg-lightgreen{
+    background-color: #B0EACD
+}
+.file-input {
+    display: none;
+}
+
+/* Style the custom button */
+.upload-btn {
+    padding: 8px 16px;
+    background-color: #B0EACD;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight:normal;
+    transition: 250ms;
+}
+
+.upload-btn:hover {
+    font-weight:bold;
+    color: #00c864;
+    background-color: rgba(255, 255, 255, 0.865); 
+}
+
+.image-preview-container {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.image-preview {
+    max-width: 100%;
+    max-height: 150px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

@@ -11,7 +11,7 @@ const markerSchema = new mongoose.Schema({
     addedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     borrowedBy: { type: Boolean, default: 'false' },
     addedAt: { type: Date, default: Date.now },
-    imageUrl: String
+    imageUrl: { type: String },    
 });
 
 const Marker = mongoose.model('Marker', markerSchema);

@@ -30,34 +30,33 @@ let markerCoordinates;
 // Show form when the map is clicked
 map.on('click', function(e) {
     markerCoordinates = [e.latlng.lat, e.latlng.lng];
-    document.getElementById('marker-form').style.display = 'block';
+    document.getElementById("overlay").style.display = "flex";
 });
 
 // Function to save the marker to the database
 async function saveMarker() {
     const quantity = document.getElementById('quantity').value;
     const price = document.getElementById('price').value;
-    const imageUrl = document.getElementById('imageUrl').value;
+    const imageUrl = document.getElementById('imageUrl').files[0];
 
-    const markerData = {
-        coordinates: markerCoordinates,
-        quantity,
-        price,
-        userID,
-        imageUrl
-    };
+    const markerData = new FormData();
+    markerData.append('imageUrl', imageUrl); 
+    markerData.append('coordinates', JSON.stringify(markerCoordinates)); // Send as JSON string
+    markerData.append('quantity', quantity); 
+    markerData.append('price', price); 
+    markerData.append('userID', userID); 
 
+    console.log(markerData);
+    
     try {
-        await fetch('/addMarker', {
+        const response = await fetch('/addMarker', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(markerData)
+            body: markerData
         });
-        console.log('added succces');
-        setTimeout(() => {
-            window.location.reload();
-        }, 200);
-        
+        await response.json();
+        if (response.ok) {
+            console.log('added succces');   
+        }
     } catch (error) {
         console.error('Error saving marker:', error);
     } finally {
@@ -67,7 +66,7 @@ async function saveMarker() {
 
 // Function to close the form
 function closeForm() {
-    document.getElementById('marker-form').style.display = 'none';
+    document.getElementById("overlay").style.display = "none";
 }
 
 // Add markers from the database to the map
@@ -102,8 +101,8 @@ const greenIcon = L.icon({
 
 // Function to add marker with conditional color
 function addMarkerToMap(marker) {
-    const { coordinates, quantity, price, addedBy, borrowedBy, addedAt, status, imageUrl } = marker;
-
+    const {id, coordinates, quantity, price, borrowedBy, addedAt, status, imageUrl } = marker;
+    
     // Reformat GeoJSON coordinates from [longitude, latitude] to [latitude, longitude]
     const leafletCoordinates = [coordinates[1], coordinates[0]];
 
@@ -112,15 +111,15 @@ function addMarkerToMap(marker) {
 
     // Create marker with the chosen icon
     const markerInstance = L.marker(leafletCoordinates, { icon: markerIcon }).addTo(map);
+    
     markerInstance.bindPopup(`
-        <b>Added By:</b> ${addedBy}<br>
+        <b>added on:</b> ${addedAt}<br>
         <b>Quantity:</b> ${quantity}<br>
         <b>Price:</b> $${price}<br>
         <b>Status:</b> ${status}<br>
-        <b>Borrowed:</b> ${borrowedBy}<br>
-        <b>Date:</b> ${addedAt}<br>
+        <b>Availability:</b> ${borrowedBy}<br>
         <img src="${imageUrl}" alt="Image" width="100px" height="100px">
-        <br><button>Open Site</button>
+        <br><a href="/spot/${id}">Check spot</a>
     `);
 }
 
