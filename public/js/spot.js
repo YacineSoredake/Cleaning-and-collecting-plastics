@@ -1,6 +1,7 @@
 const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get('id');
 const spotContainer = document.getElementById('spot-details');
+const spotImage = document.getElementById('spot-image');
 
 // Wrap the code in an async function
 async function fetchSpotDetails() {
@@ -30,23 +31,68 @@ async function fetchSpotDetails() {
             // Format the added date
             const addedDate = new Date(addedAt).toLocaleString();
 
-            // Populate HTML with data
-            spotContainer.innerHTML = `
-                <div class="flex flex-col items-start justify-between">
-                    <p><b>Added By:</b> ${addedBy}</p>
-                    <p><b>Price:</b> ${price} DZ</p>
-                    <p><b>Quantity:</b> ${quantity}</p>
-                    <p><b>Status:</b> ${status}</p>
-                    <p>${borrowedBy ? borrowedBy : 'Not borrowed'}</p>
-                </div>
-                <div class="my-4">
-                    <img src="${imageUrl}" alt="Spot Image" class="w-full h-48 object-cover rounded-md">
-                    <p><b>At:</b> ${addedDate}</p>
+            // Check if the spot is unborrowed and should show the "Collect" button
+            const collectButtonHTML = borrowedBy
+                ? ''
+                : `<button id="collect-button" class="mt-4 px-4 py-2 bg-green-600 text-white font-bold rounded">Collect</button>`;
+
+            // Additional advice or informational section
+            const adviceSectionHTML = `
+                <div class="mt-6 p-4 bg-gray-100 rounded-lg shadow-md">
+                    <h3 class="text-lg font-semibold text-indigo-700">Helpful Tips</h3>
+                    <p class="text-gray-700 mt-2">Remember to bring appropriate tools for collecting plastic waste, like gloves and bags. Please be respectful of the environment and only collect items that are safe to handle.</p>
                 </div>
             `;
 
+            // Success message container
+            const successMessageHTML = `<div id="success-message" class="mt-4 text-green-600 font-semibold hidden"></div>`;
+
+            // Populate HTML with data
+            spotContainer.innerHTML = `
+                <div class="space-y-2">
+                    <h2 class="text-xl text-red-600 font-bold underline">Spot Information :</h2>
+                    <p><span class="font-bold text-indigo-700 underline">Price:</span> ${price} DZ</p>
+                    <p><span class="font-bold text-indigo-700 underline">Quantity:</span> ${quantity}</p>
+                    <p><span class="font-bold text-indigo-700 underline">Status:</span> ${status}</p>
+                    <p><span class="font-bold text-indigo-700 underline">Borrowed By:</span> ${borrowedBy ? borrowedBy : 'Not borrowed'}</p>
+                    <p><span class="font-bold text-indigo-700 underline">Added Date:</span> ${addedDate}</p>
+                    ${collectButtonHTML}
+                    ${successMessageHTML}
+                </div>
+                ${adviceSectionHTML}
+            `;
+
+            // Set the image
+            spotImage.src = imageUrl;
+
             // Initialize the map using the coordinates
             initializeMap(coordinates.coordinates);
+
+            // Add event listener to the "Collect" button if it exists
+            const collectButton = document.getElementById('collect-button');
+            if (collectButton) {
+                collectButton.addEventListener('click', async () => {
+                    console.log('Collect button clicked');
+                    const response = await fetch(`/spot?id=${id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                    });
+                    const data = await response.json();
+                    const successMessage = document.getElementById('success-message');
+                    
+                    if (response.ok) {
+                        successMessage.textContent = 'Spot successfully borrowed!';
+                        successMessage.classList.remove('hidden');
+                        collectButton.classList.add('hidden');
+                    } else {
+                        successMessage.textContent = `Error: ${data.message}`;
+                        successMessage.classList.remove('hidden');
+                        successMessage.classList.add('text-red-500');
+                    }
+                });
+            }
         } else {
             spotContainer.innerHTML = `<p class="text-red-500">Error: ${data.message}</p>`;
         }

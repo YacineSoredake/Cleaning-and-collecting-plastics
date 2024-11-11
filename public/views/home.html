@@ -30,49 +30,114 @@
             width: 300px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
+
         #map {
             width: 100%;
         }
+
+        /* Sidebar styles */
+        .sidebar {
+            width: 250px;
+            background: #1A202C;
+            color: white;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding-top: 20px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .sidebar .logo {
+            width: 150px;
+            height: 50px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar .menu-item:hover {
+            background-color: #2D3748;
+        }
+
+        .sidebar .menu-item img {
+            margin-right: 10px;
+            width: 24px;
+        }
+
+        .sidebar .menu-item span {
+            font-size: 16px;
+        }
+
+        /* For mobile view */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .menu-toggle {
+                display: flex;
+                position: absolute;
+                top: 20px;
+                left: 20px;
+                background-color: #2D3748;
+                color: white;
+                padding: 10px;
+                border-radius: 50%;
+                cursor: pointer;
+            }
+        }
     </style>
 </head>
-<body>
-    <div class="flex">
-        <div class="bg-gradient-to-b from-green-500 to-red-500 flex flex-col justify-around rounded-lg m-1">
-            <div class="p-1 flex justify-center ">
-                <img  class="h-36 p-3" src="../icons/20241108_230246.png" alt="Image with Masked Background">
-            </div>
-
-            <div class="font-bold text-white p-2 bg-gray-200 rounded-lg m-2">
-                <div class="flex gap-2 items-center justify-start" >
-                    <img class="h-8" src="../icons/marker-svgrepo-com (1).svg" alt="">
-                    <p class="font-bold text-black">
-                        Available spot
-                    </p>
-                </div>
-                <div class="flex gap-2 items-center justify-start" >
-                    <img class="h-8" src="../icons/marker-svgrepo-com.svg" alt="">
-                    <p class="font-bold text-black">
-                        Taken spot
-                    </p>
-                </div>
-                <div class="flex gap-2 items-center justify-start" >
-                    <img class="h-8" src="../icons/information-svgrepo-com.svg" alt="">
-                    <p class="font-bold text-black">
-                        Add a site by simply clicking on his location
-                    </p>
-                </div>
-            </div>
-
-            <button class="self-center flex items-center gap-3" onclick="history.back()">
-                <img  class="h-8" src="../icons/back-square-svgrepo-com.svg" alt="">
-                <p class="font-bold text-white">
-                    Exit
-                </p>
-            </button>
+<body class="bg-gray-100">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="flex justify-center">
+            <img class="logo" src="../icons/20241108_230246.png" alt="Logo">
         </div>
+
+        <div class="menu-item">
+            <img src="../icons/marker-svgrepo-com (1).svg" alt="Available Spot">
+            <span>Available Spot</span>
+        </div>
+
+        <div class="menu-item">
+            <img src="../icons/marker-svgrepo-com.svg" alt="Taken Spot">
+            <span>Taken Spot</span>
+        </div>
+
+        <div class="menu-item">
+            <img src="../icons/information-svgrepo-com.svg" alt="Info">
+            <span>Add a Site</span>
+        </div>
+
+        <div class="menu-item" onclick="history.back()">
+            <img src="../icons/back-square-svgrepo-com.svg" alt="Back">
+            <span>Exit</span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex flex-col pl-64">
         <div class="h-screen" id="map"></div>
     </div>
-    <div id="overlay" class="overlay" onclick="closeForm()">
+
+    <!-- Mobile Menu Toggle Button -->
+    <div class="menu-toggle" onclick="toggleSidebar()">
+        <img src="../icons/menu.svg" alt="Menu">
+    </div>
+
+    <div id="overlay" onclick="closeForm()">
         <div id="marker-form" class="form-container" onclick="event.stopPropagation()">
             <div class="flex flex-col justify-center gap-3">
                 <div class="flex gap-1 items-center">
@@ -107,28 +172,33 @@
             </div>
         </div>
     </div>
-    
 
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
     <script src="../js/map.js"></script>
     <script type="module" src="../js/home.js"></script>
-</body>
-<script>
-function previewImage(event) {
-    const imagePreview = document.getElementById("imagePreview");
-    const file = event.target.files[0];
-    
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            imagePreview.src = e.target.result;
-            imagePreview.style.display = "block";
-        };
-        reader.readAsDataURL(file);
-    } else {
-        imagePreview.style.display = "none";
-    }
-}
 
-</script>
+    <script>
+        // Toggle Sidebar for mobile view
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+        }
+
+        function previewImage(event) {
+            const imagePreview = document.getElementById("imagePreview");
+            const file = event.target.files[0];
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = "block";
+                };
+                reader.readAsDataURL(file);
+            } else {
+                imagePreview.style.display = "none";
+            }
+        }
+    </script>
+</body>
 </html>

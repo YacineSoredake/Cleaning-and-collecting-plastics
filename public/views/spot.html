@@ -6,25 +6,46 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../styles.css">
-    <title>Spot</title>
+    <title>Spot Details</title>
 </head>
 <body class="bg-gradient-to-b from-indigo-500 to-green-400 flex flex-col items-center justify-start min-h-screen">
-    <nav class="flex justify-between items-center w-full p-3">
-        <div>
-            <img class="h-16 ml-6" src="../icons/20241108_230246.png" alt="">
+
+    <!-- Navigation -->
+    <nav class="flex justify-between items-center w-full p-4 bg-gradient-to-b from-green-400 to-transparent">
+        <div class="flex items-center">
+            <img class="h-12 mr-4 ml-6" src="../icons/20241108_230246.png" alt="Logo">
+            <h1 class="text-white font-bold text-xl">Leaf Village</h1>
         </div>
-        <div class="mr-6 flex gap-6 text-white">
-            <a class="text-white hover:underline" href="">Home</a>
-            <a class="text-white hover:underline" href="">Map</a>
+        <div class="mr-6 flex gap-6 text-white font-semibold">
+            <a class="hover:underline" href="./landing.html">Home</a>
+            <a class="hover:underline" href="./home.html">Map</a>
+            <a class="hover:underline" href="./">My Spots</a>
         </div>
     </nav>
-    <div id="spot-container" class="w-5/6 bg-gray-200 p-6 flex flex-col justify-center rounded-lg shadow-md ">
-        <h2 class="text-2xl font-semibold mb-4">Spot Details</h2>
-        <div id="spot-details" class="text-black flex gap-5 items-center justify-between">
+
+
+    <!-- Main Container -->
+    <div id="spot-container" class="w-5/6 bg-white p-8 mt-6 rounded-lg shadow-lg flex flex-col gap-6">
+
+        <!-- Spot Content Row -->
+        <div class="flex flex-col lg:flex-row gap-8 items-start">
+            <!-- Spot Details -->
+            <div id="spot-details" class="text-gray-700 space-y-4 flex-1">
+                <!-- Populated by JavaScript -->
+            </div>
+
+            <!-- Image and Map Section -->
+            <div class="flex flex-col gap-6 flex-1">
+                <!-- Spot Image -->
+                <div class="w-full">
+                    <img src="" id="spot-image" alt="Spot Image" class="w-full h-64 object-cover rounded-lg shadow-md">
+                </div>
+                <!-- Map Container -->
+                <div id="map" class="w-full h-64 rounded-lg shadow-md"></div>
+            </div>
         </div>
-        <!-- Map container for Leaflet -->
-        <div id="map" class="w-full h-64 mt-6 rounded-lg shadow-md"></div>
     </div>
+
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
     <script src="../js/spot.js"></script>
 </body>

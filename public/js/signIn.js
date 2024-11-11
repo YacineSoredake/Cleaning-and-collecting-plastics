@@ -34,7 +34,7 @@ signInBtn.addEventListener('click',async() => {
                 const refreshToken= result.refreshToken;
                 localStorage.setItem("refreshToken",refreshToken)
                 setTimeout(() => {
-                    window.location.href="/public/views/home.html"
+                    window.location.href="/public/views/navigate.html"
                 }, 200);
             } else {
                 fillResponseMsg(result.message)
