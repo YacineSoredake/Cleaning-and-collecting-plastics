@@ -36,7 +36,8 @@ exports.MySpots = async (request, response) => {
     }
     try {
         // Use `find()` for MongoDB to get spots for a specific user
-        const spots = await Marker.find({ userId });  // Find spots with the specified userId
+        const spots = await Marker.find({ addedBy: userId });
+
 
         if (spots.length === 0) {
             return response.status(404).json({ message: 'No spots found for this user' }); 
