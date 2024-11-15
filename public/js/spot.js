@@ -39,8 +39,8 @@ async function fetchSpotDetails() {
             // Additional advice or informational section
             const adviceSectionHTML = `
                 <div class="mt-6 p-4 bg-gray-100 rounded-lg shadow-md">
-                    <h3 class="text-lg font-semibold text-indigo-700">Helpful Tips</h3>
-                    <p class="text-gray-700 mt-2">Remember to bring appropriate tools for collecting plastic waste, like gloves and bags. Please be respectful of the environment and only collect items that are safe to handle.</p>
+                    <h3 class="text-xl font-semibold text-indigo-700">Helpful Tips</h3>
+                    <p class="text-lg text-gray-700 mt-2">Remember to bring appropriate tools for collecting plastic waste, like gloves and bags. Please be respectful of the environment and only collect items that are safe to handle.</p>
                 </div>
             `;
 
@@ -50,12 +50,12 @@ async function fetchSpotDetails() {
             // Populate HTML with data
             spotContainer.innerHTML = `
                 <div class="space-y-2">
-                    <h2 class="text-xl text-red-600 font-bold underline">Spot Information :</h2>
-                    <p><span class="font-bold text-indigo-700 underline">Price:</span> ${price} DZ</p>
-                    <p><span class="font-bold text-indigo-700 underline">Quantity:</span> ${quantity}</p>
-                    <p><span class="font-bold text-indigo-700 underline">Status:</span> ${status}</p>
-                    <p><span class="font-bold text-indigo-700 underline">Borrowed By:</span> ${borrowedBy ? borrowedBy : 'Not borrowed'}</p>
-                    <p><span class="font-bold text-indigo-700 underline">Added Date:</span> ${addedDate}</p>
+                    <h2 class="text-2xl text-red-600 font-bold underline">Spot Information :</h2>
+                    <p class="text-lg"><span class="font-bold text-indigo-700 underline">Price:</span> ${price} DZ</p>
+                    <p class="text-lg"><span class="font-bold text-indigo-700 underline">Quantity:</span> ${quantity}</p>
+                    <p class="text-lg"><span class="font-bold text-indigo-700 underline">Status:</span> ${status}</p>
+                    <p class="text-lg"><span class="font-bold text-indigo-700 underline">Borrowed By:</span> ${borrowedBy ? borrowedBy : 'Not borrowed'}</p>
+                    <p class="text-lg"><span class="font-bold text-indigo-700 underline">Added Date:</span> ${addedDate}</p>
                     ${collectButtonHTML}
                     ${successMessageHTML}
                 </div>

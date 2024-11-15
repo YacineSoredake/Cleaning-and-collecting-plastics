@@ -28,3 +28,23 @@ exports.BorrowSpot = async (request, response) => {
         response.status(500).json({ message: 'Error updating marker', error });
     }
 };
+
+exports.MySpots = async (request, response) => {
+    const userId = request.query.id; 
+    if (!userId) {
+        return response.status(400).json({ message: 'User ID is required' });  // Missing user ID
+    }
+    try {
+        // Use `find()` for MongoDB to get spots for a specific user
+        const spots = await Marker.find({ userId });  // Find spots with the specified userId
+
+        if (spots.length === 0) {
+            return response.status(404).json({ message: 'No spots found for this user' }); 
+        }
+
+        response.status(200).json(spots);  // Return spots with status 200
+    } catch (error) {
+        console.error('Error retrieving spots:', error);
+        response.status(500).json({ message: 'Error retrieving spots', error: error.message });
+    }
+};

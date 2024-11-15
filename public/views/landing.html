@@ -11,32 +11,31 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
 </head>
 <body>
-    <div class="bg-green-800 flex flex-col justify-between">
+    <div class="flex flex-col" style="background-image: url('../icons/preview.webp'); background-size: cover; background-position: center;">
+        
         <!-- Header -->
-        <div id="mainHeader" class="flex flex-row-reverse px-4 py-2 items-center justify-between transition-all duration-300">
+        <div id="mainHeader" class="bg-black bg-opacity-50 flex flex-row-reverse px-4 py-2 items-center justify-between">
             <a id="link" class="text-gray-50 py-1" href="./signIn.html">Log in</a>
             <img class="h-12" src="../icons/20241108_230246.png" alt="Logo">
         </div>
 
         <!-- Main Message -->
-        <div class="bg-green-800 flex flex-col items-center gap-5 p-5 h-auto" id="main-message">
+        <div class="bg-black bg-opacity-50 flex flex-col items-center gap-5 p-5 h-auto" id="main-message">
             <p class="text-gray-50 text-4xl text-center">Join the Movement to Recycle Plastic</p>
             <p class="text-gray-50 text-xl text-center">Help us create a cleaner environment by repurposing plastic waste.</p>   
             <a href="./signIn.html" class="bg-yellow-400 text-gray-950 px-6 py-2 rounded hover:bg-yellow-500">Help now</a>   
         </div>
 
         <!-- Section 1: Education -->
-        <div class="bg-blue-500 flex flex-col sm:flex-row justify-around items-center gap-5 p-6" id="section-1">
-            <div class="sm:w-1/2 text-center sm:text-left">
-                <p class="text-3xl sm:text-4xl py-4">Learn About Recycling</p>
+        <div class="bg-green-800 bg-opacity-80 h-80 flex flex-col sm:flex-row justify-around items-center gap-5 p-6" id="section-1">
+            <div class="sm:w-1/2 text-center text-white sm:text-left">
+                <p class="text-3xl text-center sm:text-4xl py-4">Learn About Recycling</p>
                 <p class="text-xl">Understand the impact of plastic waste on our planet and discover the many ways you can help.<br>
                     From reusing materials to sorting recyclables, every action makes a difference.</p>     
             </div>  
-            <div class="relative flex items-center justify-center sm:w-1/2">
-                <img class="h-48 sm:h-72 rounded" src="../icons/pixlr-image-generator-83e3332d-5e9a-4214-b8a0-26a89d04c8bb.png" alt="Recycling education">
-            </div>
         </div>
-
+    </div>
+        
         <!-- Section 2: Get Involved -->
         <div class="bg-yellow-500 flex flex-col sm:flex-row justify-around items-center gap-5 p-6" id="section-2">
             <div class="sm:w-1/2 text-center sm:text-left">
@@ -48,13 +47,12 @@
         </div>
 
         <!-- Section 3: Contribute to Solutions -->
-        <div class="bg-green-600 flex flex-col sm:flex-row justify-around items-center gap-5 p-6" id="section-3">
-            <div class="sm:w-1/2 text-center sm:text-left">
+        <div class="bg-cover bg-center flex flex-col justify-center items-center gap-5 p-6 h-96 text-center text-gray-50" 
+             style="background-image: url('../icons/pixlr-image-generator-6a7c8404-598e-43de-99f8-09671200f28c.png');" id="section-3">
+            <div class=" max-w-lg">
                 <p class="text-3xl sm:text-4xl py-4">Contribute to Recycling Solutions</p>
-                <p class="text-xl">Help promote sustainable practices by contributing ideas or innovations.<br>
-                    Whether it's new recycling methods or educational content, every idea helps create a sustainable future.</p>     
-            </div>  
-            <img class="h-48 sm:h-60 rounded" src="../icons/pixlr-image-generator-6a7c8404-598e-43de-99f8-09671200f28c.png" alt="Sustainable solutions">
+                <p class="text-xl">Help promote sustainable practices by contributing ideas or innovations. Whether it's new recycling methods or educational content, every idea helps create a sustainable future.</p>     
+            </div>
         </div>
 
         <!-- Footer -->
@@ -73,11 +71,6 @@
                     <p>API for Recycling Data</p>
                 </div>
             </div>
-            <div class="flex gap-5 flex-wrap justify-center">
-                <p>Terms of Use</p>
-                <p>Privacy Policy</p>  
-                <p>Content Policy</p> 
-            </div>
         </div>
     </div>
 
@@ -86,7 +79,7 @@
         gsap.registerPlugin(ScrollTrigger);
 
         // Define the sections
-        const sections = ['#main-message', '#section-1', '#section-2', '#section-3'];
+        const sections = ['#section-1', '#section-2', '#section-3'];
 
         // Apply GSAP scroll animations
         sections.forEach((section) => {

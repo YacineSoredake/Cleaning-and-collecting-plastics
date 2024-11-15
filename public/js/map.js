@@ -1,24 +1,36 @@
-const userID = localStorage.getItem('userid')
+const userID = localStorage.getItem('userid');
 const map = L.map('map').setView([51.505, -0.09], 13);
 
-if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-        (position) => {
-            const { latitude, longitude } = position.coords;
-            map.setView([latitude, longitude], 13); // Center map on user's location
+// Use high accuracy setting to improve initial position accuracy
+map.locate({ setView: true, maxZoom: 13, watch: true, enableHighAccuracy: true });
 
-            // Optionally, add a marker for the user's location
-            L.marker([latitude, longitude]).addTo(map)
+// Define a variable to store the marker so it can be updated if needed
+let userMarker;
+
+// Listen for location found event
+map.on('locationfound', (e) => {
+    const { lat, lng } = e.latlng;
+
+    // Set view to user's location after a slight delay to improve accuracy
+    setTimeout(() => {
+        map.setView([lat, lng], 13);
+
+        // Add or update the marker at the user's location
+        if (!userMarker) {
+            userMarker = L.marker([lat, lng]).addTo(map)
                 .bindPopup("You are here")
                 .openPopup();
-        },
-        () => {
-            console.error("Unable to retrieve your location");
+        } else {
+            userMarker.setLatLng([lat, lng]); // Update marker position
         }
-    );
-} else {
-    console.error("Geolocation is not supported by this browser.");
-}
+    }, 500); // Adjust delay if needed
+});
+
+// Handle location error
+map.on('locationerror', () => {
+    console.error("Unable to retrieve your location");
+});
+
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
@@ -38,31 +50,29 @@ async function saveMarker() {
     const quantity = document.getElementById('quantity').value;
     const price = document.getElementById('price').value;
     const imageUrl = document.getElementById('imageUrl').files[0];
-
+    
     const markerData = new FormData();
     markerData.append('imageUrl', imageUrl); 
-    markerData.append('coordinates', JSON.stringify(markerCoordinates)); // Send as JSON string
+    markerData.append('coordinates', JSON.stringify(markerCoordinates));
     markerData.append('quantity', quantity); 
     markerData.append('price', price); 
     markerData.append('userID', userID); 
-
-    console.log(markerData);
     
     try {
         const response = await fetch('/addMarker', {
             method: 'POST',
             body: markerData
         });
-        await response.json();
-        if (response.ok) {
-            console.log('added succces');   
-        }
+        if (!response.ok) throw new Error("Failed to add marker");
+        const data = await response.json();
+        console.log('Marker added successfully:', data);
     } catch (error) {
         console.error('Error saving marker:', error);
     } finally {
         closeForm();
     }
 }
+
 
 // Function to close the form
 function closeForm() {
@@ -117,14 +127,14 @@ function addMarkerToMap(marker) {
             <p class="font-semibold text-lg">Added on: <span class="font-normal">${addedAt}</span></p>
             <p><b>Quantity:</b> <span class="font-medium">${quantity}</span></p>
             <p><b>Price:</b> <span class="font-medium text-green-600">${price} DZ</span></p>
-            <p><b>Status:</b> <span class="font-medium ${status === 'Available' ? 'text-green-500' : 'text-red-500'}">${status}</span></p>
-            <p><b>Availability:</b> <span class="font-medium">${borrowedBy}</span></p>
+            <p><b>Status:</b> <span class="font-medium ${borrowedBy ? 'text-red-500' : 'text-green-500'}">${status}</span></p>
             <div class="my-2">
                 <img src="${imageUrl}" alt="Image" class="w-full h-24 object-cover rounded-md">
             </div>
             <a href="./spot.html?id=${id}" class="text-blue-500 hover:underline">Check spot</a>
         </div>
     `);
+    
     
 }
 

@@ -3,7 +3,7 @@ const Marker = require('../models/Marler');
 // Route to save a new marker
 exports.addMarker = async (req, res) => {
     const { quantity, price, userID } = req.body;
-    const coordinates = JSON.parse(req.body.coordinates); // Parse the coordinates JSON
+    const coordinates = JSON.parse(req.body.coordinates);
     const imageUrl = req.file ? `../upload/${req.file.filename}` : null;
     const status = "uncollected";
     const borrowedBy = false;
