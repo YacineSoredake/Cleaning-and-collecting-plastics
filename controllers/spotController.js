@@ -12,11 +12,11 @@ exports.getSpot = async (request, response) => {
 };
 exports.BorrowSpot = async (request, response) => {
     const spotID = request.query.id;
-
+    const {userId} = request.body;
     try {
         const spot = await Marker.findOneAndUpdate(
             { _id: spotID },
-            { borrowedBy: true },
+            { borrowedBy: userId },
             { new: true }
         );
         if (!spot) {

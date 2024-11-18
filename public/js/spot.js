@@ -2,6 +2,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get('id');
 const spotContainer = document.getElementById('spot-details');
 const spotImage = document.getElementById('spot-image');
+const userId = localStorage.getItem('userid');
 
 async function fetchSpotDetails() {
     try {
@@ -59,8 +60,8 @@ async function fetchSpotDetails() {
 
                         <!-- Borrowed By -->
                         <div class="flex items-center">
-                            <span class="font-bold text-gray-600 mr-2">Borrowed By:</span>
-                            <span class="text-gray-800">${borrowedBy ? borrowedBy : 'Not borrowed'}</span>
+                            <span class="font-bold text-gray-600 mr-2">Booking:</span>
+                            <span class="text-gray-800">${borrowedBy ? borrowedBy : 'Not Booked'}</span>
                         </div>
 
                         <!-- Added Date -->
@@ -92,6 +93,7 @@ async function fetchSpotDetails() {
                     console.log('Collect button clicked');
                     const response = await fetch(`/spot?id=${id}`, {
                         method: 'PUT',
+                        body:JSON.stringify({ userId}),
                         headers: {
                             'Content-Type': 'application/json'
                         },
@@ -100,7 +102,7 @@ async function fetchSpotDetails() {
                     const successMessage = document.getElementById('success-message');
                     
                     if (response.ok) {
-                        successMessage.textContent = 'Spot successfully borrowed!';
+                        successMessage.textContent = 'Spot successfully Booked!';
                         successMessage.classList.remove('hidden');
                         collectButton.classList.add('hidden');
                     } else {
