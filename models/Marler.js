@@ -9,7 +9,7 @@ const markerSchema = new mongoose.Schema({
     price: { type: String, required: true },
     status: { type: String, default: 'uncollected' },
     addedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    borrowedBy: { type: Boolean, default: 'false' },
+    borrowedBy: { type: String, default: "" },
     addedAt: { type: Date, default: Date.now },
     imageUrl: { type: String },    
 });

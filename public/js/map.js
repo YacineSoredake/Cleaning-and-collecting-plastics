@@ -127,7 +127,7 @@ function addMarkerToMap(marker) {
             <p class="font-semibold text-lg">Added on: <span class="font-normal">${addedAt}</span></p>
             <p><b>Quantity:</b> <span class="font-medium">${quantity}</span></p>
             <p><b>Price:</b> <span class="font-medium text-green-600">${price} DZ</span></p>
-            <p><b>Status:</b> <span class="font-medium ${borrowedBy ? 'text-red-500' : 'text-green-500'}">${status}</span></p>
+            <p><b>State :</b> <span class="font-medium">${status}</span></p>
             <div class="my-2">
                 <img src="${imageUrl}" alt="Image" class="w-full h-24 object-cover rounded-md">
             </div>

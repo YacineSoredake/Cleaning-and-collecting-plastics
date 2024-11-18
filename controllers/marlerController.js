@@ -5,17 +5,13 @@ exports.addMarker = async (req, res) => {
     const { quantity, price, userID } = req.body;
     const coordinates = JSON.parse(req.body.coordinates);
     const imageUrl = req.file ? `../upload/${req.file.filename}` : null;
-    const status = "uncollected";
-    const borrowedBy = false;
     const addedAt = new Date();
     try {
         const marker = new Marker({
             coordinates: { type: 'Point', coordinates },
             quantity,
             price,
-            status,
             addedBy: userID,
-            borrowedBy,
             addedAt,
             imageUrl
         });

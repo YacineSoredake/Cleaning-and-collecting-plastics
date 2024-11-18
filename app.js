@@ -25,7 +25,7 @@ app.use('/',markerRoute);
 app.use('/',SpotRoute);
 
 app.get("/", (request, response) => {
-    response.redirect("/public/views/signIn.html");
+    response.redirect("/public/views/landing.html");
 });
 
 const PORT = process.env.PORT || 3000;

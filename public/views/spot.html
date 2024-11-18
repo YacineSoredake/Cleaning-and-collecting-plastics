@@ -8,10 +8,10 @@
     <link rel="stylesheet" href="../styles.css">
     <title>Spot Details</title>
 </head>
-<body class="bg-gradient-to-b from-indigo-500 to-green-400 flex flex-col items-center justify-start min-h-screen">
+<body class="bg-gradient-to-l from-indigo-500 to-green-400 flex flex-col items-center justify-start min-h-screen">
 
     <!-- Navigation -->
-    <nav class="flex justify-between items-center w-full p-4 bg-gradient-to-b from-green-400 to-transparent">
+    <nav class="flex justify-between items-center w-full p-4 bg-gradient-to-l from-indigo-500 to-green-400">
         <div class="flex items-center">
             <img class="h-12 mr-4 ml-6" src="../icons/20241108_230246.png" alt="Logo">
             <h1 class="text-white font-bold text-xl">Leaf Village</h1>
@@ -23,15 +23,16 @@
         </div>
     </nav>
 
+    <!-- Main Content -->
+    <div id="spot-container" class="w-5/6 bg-gray-50 p-6 mt-6 rounded-lg shadow-xl flex flex-col gap-6">
+        <!-- Header Section -->
+        <h2 class="text-3xl font-bold text-indigo-700">Spot Details</h2>
 
-    <!-- Main Container -->
-    <div id="spot-container" class="w-5/6 bg-white p-8 mt-6 rounded-lg shadow-lg flex flex-col gap-6">
-
-        <!-- Spot Content Row -->
+        <!-- Spot Details Row -->
         <div class="flex flex-col lg:flex-row gap-8 items-start">
             <!-- Spot Details -->
-            <div id="spot-details" class="text-gray-700 space-y-4 flex-1">
-                <!-- Populated by JavaScript -->
+            <div id="spot-details" class="bg-gray-100 p-6 rounded-lg shadow-lg flex-1 space-y-4">
+                <p class="text-lg text-gray-700">Loading details...</p>
             </div>
 
             <!-- Image and Map Section -->
@@ -40,8 +41,40 @@
                 <div class="w-full">
                     <img src="" id="spot-image" alt="Spot Image" class="w-full h-64 object-cover rounded-lg shadow-md">
                 </div>
+
                 <!-- Map Container -->
                 <div id="map" class="w-full h-64 rounded-lg shadow-md"></div>
+            </div>
+        </div>
+
+        <!-- Tips Section -->
+        <div class="bg-gray-50 p-6 rounded-lg shadow-md">
+            <h3 class="text-xl font-semibold text-green-700">Helpful Tips</h3>
+            <p class="text-gray-600 mt-2">
+                Remember to bring appropriate tools for collecting plastic waste, like gloves and bags.
+                Please be respectful of the environment and only collect items that are safe to handle.
+            </p>
+        </div>
+    </div>
+
+    <!-- Loader (hidden by default) -->
+    <div id="loader" class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-75 hidden">
+        <div class="loader animate-spin rounded-full border-4 border-indigo-500 border-t-transparent w-12 h-12"></div>
+    </div>
+
+    <div class=" w-full text-gray-50 text-sm flex flex-col items-center gap-5 p-4">
+        <div class="flex flex-wrap justify-center gap-5">
+            <div class="flex flex-col items-center">
+                <p class="font-bold py-3 hover:underline">Resources</p>
+                <p>Recycling Guidelines</p>
+            </div>
+            <div class="flex flex-col items-center">
+                <p class="font-bold py-3 hover:underline">Community</p>
+                <p>Plastic Recycling Heroes</p>
+            </div>
+            <div class="flex flex-col items-center">
+                <p class="font-bold py-3 hover:underline">Developers</p>
+                <p>API for Recycling Data</p>
             </div>
         </div>
     </div>
@@ -49,4 +82,5 @@
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
     <script src="../js/spot.js"></script>
 </body>
+
 </html>

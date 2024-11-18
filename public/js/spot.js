@@ -3,7 +3,6 @@ const id = urlParams.get('id');
 const spotContainer = document.getElementById('spot-details');
 const spotImage = document.getElementById('spot-image');
 
-// Wrap the code in an async function
 async function fetchSpotDetails() {
     try {
         const response = await fetch(`/spot?id=${id}`, {
@@ -28,47 +27,65 @@ async function fetchSpotDetails() {
                 _id
             } = data;
 
-            // Format the added date
             const addedDate = new Date(addedAt).toLocaleString();
 
-            // Check if the spot is unborrowed and should show the "Collect" button
             const collectButtonHTML = borrowedBy
                 ? ''
                 : `<button id="collect-button" class="mt-4 px-4 py-2 bg-green-600 text-white font-bold rounded">Collect</button>`;
 
-            // Additional advice or informational section
-            const adviceSectionHTML = `
-                <div class="mt-6 p-4 bg-gray-100 rounded-lg shadow-md">
-                    <h3 class="text-xl font-semibold text-indigo-700">Helpful Tips</h3>
-                    <p class="text-lg text-gray-700 mt-2">Remember to bring appropriate tools for collecting plastic waste, like gloves and bags. Please be respectful of the environment and only collect items that are safe to handle.</p>
-                </div>
-            `;
-
-            // Success message container
             const successMessageHTML = `<div id="success-message" class="mt-4 text-green-600 font-semibold hidden"></div>`;
 
-            // Populate HTML with data
             spotContainer.innerHTML = `
-                <div class="space-y-2">
-                    <h2 class="text-2xl text-red-600 font-bold underline">Spot Information :</h2>
-                    <p class="text-lg"><span class="font-bold text-indigo-700 underline">Price:</span> ${price} DZ</p>
-                    <p class="text-lg"><span class="font-bold text-indigo-700 underline">Quantity:</span> ${quantity}</p>
-                    <p class="text-lg"><span class="font-bold text-indigo-700 underline">Status:</span> ${status}</p>
-                    <p class="text-lg"><span class="font-bold text-indigo-700 underline">Borrowed By:</span> ${borrowedBy ? borrowedBy : 'Not borrowed'}</p>
-                    <p class="text-lg"><span class="font-bold text-indigo-700 underline">Added Date:</span> ${addedDate}</p>
-                    ${collectButtonHTML}
+                <div class="bg-gray-50 p-6 rounded-lg shadow-lg space-y-4">
+                    <h3 class="text-xl font-bold text-indigo-700 border-b pb-2">Spot Details</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <!-- Price -->
+                        <div class="flex items-center">
+                            <span class="font-bold text-gray-600 mr-2">Price:</span>
+                            <span class="text-gray-800">${price} DZ</span>
+                        </div>
+
+                        <!-- Quantity -->
+                        <div class="flex items-center">
+                            <span class="font-bold text-gray-600 mr-2">Quantity:</span>
+                            <span class="text-gray-800">${quantity}</span>
+                        </div>
+
+                        <!-- Status -->
+                        <div class="flex items-center">
+                            <span class="font-bold text-gray-600 mr-2">Status:</span>
+                            <span class="text-gray-800">${status}</span>
+                        </div>
+
+                        <!-- Borrowed By -->
+                        <div class="flex items-center">
+                            <span class="font-bold text-gray-600 mr-2">Borrowed By:</span>
+                            <span class="text-gray-800">${borrowedBy ? borrowedBy : 'Not borrowed'}</span>
+                        </div>
+
+                        <!-- Added Date -->
+                        <div class="flex items-center col-span-2">
+                            <span class="font-bold text-gray-600 mr-2">Added Date:</span>
+                            <span class="text-gray-800">${addedDate}</span>
+                        </div>
+                    </div>
+
+                    <!-- Collect Button -->
+                    <div class="mt-4 flex justify-start">
+                        ${collectButtonHTML}
+                    </div>
+
+                    <!-- Success Message -->
                     ${successMessageHTML}
                 </div>
-                ${adviceSectionHTML}
             `;
 
-            // Set the image
             spotImage.src = imageUrl;
 
-            // Initialize the map using the coordinates
+           
             initializeMap(coordinates.coordinates);
 
-            // Add event listener to the "Collect" button if it exists
+           
             const collectButton = document.getElementById('collect-button');
             if (collectButton) {
                 collectButton.addEventListener('click', async () => {
@@ -102,21 +119,17 @@ async function fetchSpotDetails() {
     }
 }
 
-// Function to initialize the map and set a marker
 function initializeMap([latitude, longitude]) {
     const map = L.map('map').setView([latitude, longitude], 14);
 
-    // Add OpenStreetMap tiles
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    // Add a marker to the map
     L.marker([latitude, longitude]).addTo(map)
         .bindPopup(`<b>Spot Location</b>`)
         .openPopup();
 }
 
-// Call the async function
 fetchSpotDetails();

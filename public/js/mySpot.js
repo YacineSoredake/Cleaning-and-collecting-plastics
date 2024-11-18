@@ -28,55 +28,63 @@ const fetchSpots = async () => {
 
         spots.forEach((spot) => {
             // Extract latitude and longitude from `coordinates`
-            const [latitude,longitude] = spot.coordinates.coordinates;
+            const [latitude, longitude] = spot.coordinates.coordinates;
 
             // Create a container for the spot
             const spotCard = document.createElement('div');
             spotCard.classList.add(
-                'p-4',
+                'spot-card',
+                'bg-white',
                 'rounded-lg',
                 'shadow-md',
-                'bg-white',
-                'mb-6',
+                'p-4',
                 'flex',
                 'flex-col',
-                'lg:flex-row',
-                'gap-6',
+                'gap-4',
+                'transition-all',
+                'hover:scale-105',
+                'hover:shadow-xl',
+                'border',
+                'border-transparent',
+                'hover:border-green-500'
             );
 
-        const spotDetails = document.createElement('div');
-        spotDetails.classList.add('flex-1', 'space-y-4', 'text-gray-700'); // Added 'space-y-4' for vertical spacing
-        spotDetails.innerHTML = `
-            <h3 class="text-lg text-green-600 font-semibold">
-                Quantity: <span class="text-gray-800">${spot.quantity || 'N/A'}</span>
-            </h3>
-            <h3 class="text-lg text-green-600 font-semibold">
-                Price: <span class="text-gray-800">${spot.price || 'N/A'} DZ</span>
-            </h3>
-            <h3 class="text-lg text-green-600 font-semibold">
-                Status: <span class="text-gray-800">${spot.status || 'N/A'}</span>
-            </h3>
-            <h3 class="text-lg text-green-600 font-semibold">
-                Borrowed: <span class="text-gray-800">${spot.borrowedBy ? 'Yes' : 'No'}</span>
-            </h3>
-        `;
+            // Create Spot Details Section (Compact and minimal)
+            const spotDetails = document.createElement('div');
+            spotDetails.classList.add('spot-details', 'text-sm', 'text-gray-700', 'space-y-2');
 
-        
+            // Dynamically generate each spot information line
+            const details = [
+                { label: 'Quantity', value: spot.quantity || 'N/A' },
+                { label: 'Price', value: `${spot.price || 'N/A'} DZ` },
+                { label: 'Status', value: spot.status || 'N/A' },
+                { label: 'Borrowed', value: spot.borrowedBy ? 'Yes' : 'No' }
+            ];
 
-            // Spot Image Section
+            details.forEach(detail => {
+                const detailDiv = document.createElement('div');
+                detailDiv.classList.add('flex', 'justify-between');
+                detailDiv.innerHTML = `
+                    <span class="text-green-600 font-medium">${detail.label}:</span>
+                    <span>${detail.value}</span>
+                `;
+                spotDetails.appendChild(detailDiv);
+            });
+
+            // Spot Image Section (Minimal, clean, and adaptive)
             const spotImage = document.createElement('img');
             spotImage.src = spot.imageUrl || '../assets/default-image.jpg'; // Use default if not provided
             spotImage.alt = `Spot Image ${spot._id}`;
-            spotImage.classList.add('w-full', 'h-64', 'object-cover', 'rounded-lg', 'shadow-md');
+            spotImage.classList.add('w-full', 'h-48', 'object-cover', 'rounded-lg', 'shadow-sm');
 
-            // Spot Map Section
+            // Spot Map Section (Simple map layout)
             const mapContainer = document.createElement('div');
-            mapContainer.classList.add('w-full', 'h-64', 'rounded-lg', 'shadow-md');
+            mapContainer.classList.add('w-full', 'h-40', 'rounded-lg', 'shadow-sm', 'mt-2');
             mapContainer.id = `map-${spot._id}`; // Unique ID for each map
 
             // Append elements to the card
-            spotCard.appendChild(spotDetails);
             spotCard.appendChild(spotImage);
+            spotCard.appendChild(spotDetails);
             spotCard.appendChild(mapContainer);
 
             // Append the card to the container

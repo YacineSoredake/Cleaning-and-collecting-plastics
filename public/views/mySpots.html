@@ -8,44 +8,63 @@
     <link rel="stylesheet" href="../styles.css">
     <title>My Spots</title>
     <style>
-                /* Custom styles for the map and other elements */
-        #map {
-            border: 2px solid #4caf50;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 0.5rem;
-        }
+/* Add a grid layout to the container */
+#spot-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive grid */
+    gap: 2rem;
+    padding: 2rem;
+}
 
-        #spot-container {
-            max-height: 80vh;
-            overflow-y: auto;
-            scrollbar-width: thin;
-            scrollbar-color: #4caf50 transparent;
-        }
+.spot-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-        #spot-container::-webkit-scrollbar {
-            width: 6px;
-        }
+.spot-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
 
-        #spot-container::-webkit-scrollbar-thumb {
-            background-color: #4caf50;
-            border-radius: 3px;
-        }
+.spot-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
 
-        nav a:hover {
-            text-decoration: underline;
-            color: #34d399;
-        }
+.spot-details .flex {
+    justify-content: space-between;
+}
 
-        body {
-            font-family: 'Inter', sans-serif;
-        }
+.spot-card img {
+    border-radius: 8px;
+    object-fit: cover;
+    height: 180px;
+}
+
+.spot-card .spot-map {
+    height: 180px;
+    border-radius: 8px;
+    background-color: #f1f1f1;
+}
+
+.spot-card .text-green-600 {
+    color: #34d399;
+}
+
 
     </style>
 </head>
-<body class="bg-gradient-to-b from-indigo-500 to-green-400 flex flex-col items-center justify-start min-h-screen">
+<body class="bg-gradient-to-l from-indigo-500 to-green-400 flex flex-col items-center justify-start min-h-screen">
 
     <!-- Navigation -->
-    <nav class="flex justify-between items-center w-full p-4 bg-gradient-to-b from-green-400 to-transparent">
+    <nav class="flex justify-between items-center w-full p-4 bg-gradient-to-l from-indigo-500 to-green-400">
         <div class="flex items-center">
             <img class="h-12 mr-4 ml-6" src="../icons/20241108_230246.png" alt="Logo">
             <h1 class="text-white font-bold text-xl tracking-wide">Leaf Village</h1>
@@ -59,11 +78,28 @@
 
     <!-- Main Container -->
     <div id="spot-container" class="w-11/12 lg:w-3/4 bg-white p-8 mt-6 rounded-lg shadow-lg">
-        <h2 class="text-2xl font-bold color-red underline mb-6">My Spots</h2>
+        <h2 class="text-3xl text-center font-bold text-indigo-500 mb-6">My Spots</h2>
         <div id="loading" class="text-center text-gray-500"></div>
         <!-- Spot Content -->
         <div id="spot-content" class="flex flex-col gap-8">
             <!-- Content dynamically populated via JavaScript -->
+        </div>
+    </div>
+
+    <div class=" w-full text-gray-50 text-sm flex flex-col items-center gap-5 p-4">
+        <div class="flex flex-wrap justify-center gap-5">
+            <div class="flex flex-col items-center">
+                <p class="font-bold py-3 hover:underline">Resources</p>
+                <p>Recycling Guidelines</p>
+            </div>
+            <div class="flex flex-col items-center">
+                <p class="font-bold py-3 hover:underline">Community</p>
+                <p>Plastic Recycling Heroes</p>
+            </div>
+            <div class="flex flex-col items-center">
+                <p class="font-bold py-3 hover:underline">Developers</p>
+                <p>API for Recycling Data</p>
+            </div>
         </div>
     </div>
 
