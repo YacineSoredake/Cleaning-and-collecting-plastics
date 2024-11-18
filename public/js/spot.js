@@ -61,7 +61,7 @@ async function fetchSpotDetails() {
                         <!-- Borrowed By -->
                         <div class="flex items-center">
                             <span class="font-bold text-gray-600 mr-2">Booking:</span>
-                            <span class="text-gray-800">${borrowedBy ? borrowedBy : 'Not Booked'}</span>
+                            <span class="text-gray-800">${borrowedBy ? 'Already Booked' : 'Not Booked'}</span>
                         </div>
 
                         <!-- Added Date -->

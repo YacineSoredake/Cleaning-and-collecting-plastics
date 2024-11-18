@@ -32,10 +32,9 @@ exports.BorrowSpot = async (request, response) => {
 exports.MySpots = async (request, response) => {
     const userId = request.query.id; 
     if (!userId) {
-        return response.status(400).json({ message: 'User ID is required' });  // Missing user ID
+        return response.status(400).json({ message: 'User ID is required' });  
     }
     try {
-        // Use `find()` for MongoDB to get spots for a specific user
         const spots = await Marker.find({ addedBy: userId });
 
 
@@ -43,7 +42,27 @@ exports.MySpots = async (request, response) => {
             return response.status(404).json({ message: 'No spots found for this user' }); 
         }
 
-        response.status(200).json(spots);  // Return spots with status 200
+        response.status(200).json(spots);  
+    } catch (error) {
+        console.error('Error retrieving spots:', error);
+        response.status(500).json({ message: 'Error retrieving spots', error: error.message });
+    }
+};
+
+exports.bookedSpt = async (request, response) => {
+    const userId = request.query.id; 
+    if (!userId) {
+        return response.status(400).json({ message: 'User ID is required' }); 
+    }
+    try {
+        const spots = await Marker.find({ borrowedBy: userId });
+
+
+        if (spots.length === 0) {
+            return response.status(404).json({ message: 'No spots found for this user' }); 
+        }
+
+        response.status(200).json(spots); 
     } catch (error) {
         console.error('Error retrieving spots:', error);
         response.status(500).json({ message: 'Error retrieving spots', error: error.message });
