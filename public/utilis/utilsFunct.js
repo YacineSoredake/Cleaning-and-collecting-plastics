@@ -13,3 +13,15 @@ export function getUserPayload() {
         return null; // Handle the error gracefully
     }
 }
+
+export function disconnect() {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('userid');
+    window.location.href = '../views/signIn.html';
+}
+
+// Make the function globally available for use in the HTML
+window.disconnect = disconnect;
+
+
