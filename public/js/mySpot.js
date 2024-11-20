@@ -1,10 +1,5 @@
 const userId = localStorage.getItem('userid');
 
-if (!userId) {
-    alert("Please log in first.");
-    window.location.href = './login.html'; // Redirect to login page
-}
-
 // Function to get spots from the API and display them
 const fetchSpots = async () => {
     try {
@@ -15,7 +10,7 @@ const fetchSpots = async () => {
         if (!response.ok) {
             const errorMessage = await response.json();
             console.error('Error:', errorMessage.message);
-            alert(errorMessage.message || 'Failed to load spots.');
+            document.getElementById('loading').innerHTML="Failed to load spots."
             return;
         }
 

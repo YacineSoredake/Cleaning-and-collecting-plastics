@@ -1,5 +1,5 @@
 export function getUserPayload() {
-    const token = localStorage.getItem("aceessToken");
+    const token = localStorage.getItem("accessToken");
     
     if (!token) {
         return null; // or throw an error if preferred
