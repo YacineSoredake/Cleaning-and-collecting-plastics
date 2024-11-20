@@ -123,15 +123,36 @@ function addMarkerToMap(marker) {
     const markerInstance = L.marker(leafletCoordinates, { icon: markerIcon }).addTo(map);
     
     markerInstance.bindPopup(`
-        <div class="p-3 max-w-xs rounded-lg shadow-lg bg-lightgreen text-gray-800">
-            <p class="font-semibold text-lg">Added on: <span class="font-normal">${addedAt}</span></p>
-            <p><b>Quantity:</b> <span class="font-medium">${quantity}</span></p>
-            <p><b>Price:</b> <span class="font-medium text-green-600">${price} DZ</span></p>
-            <p><b>State :</b> <span class="font-medium">${status}</span></p>
-            <div class="my-2">
-                <img src="${imageUrl}" alt="Image" class="w-full h-24 object-cover rounded-md">
+        <div class="p-4 max-w-md rounded-lg shadow-lg bg-white text-gray-900 border border-gray-300">
+            <!-- Flex Row for Image and Details -->
+            <div class="flex items-start gap-4">
+                <!-- Image Section -->
+                <div class="w-40 h-24 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                    <img src="${imageUrl}" alt="Spot Image" class="w-full h-full object-cover">
+                </div>
+    
+                <!-- Details Section -->
+                <div class="flex flex-col flex-1 gap-1">
+                    <div class="flex justify-between">
+                        <span class="text-sm font-semibold text-gray-700">Quantity:</span>
+                        <span class="text-sm">${quantity}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-sm font-semibold text-gray-700">Price:</span>
+                        <span class="text-sm text-green-600 font-bold">${price} DZ</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-sm font-semibold text-gray-700">State:</span>
+                        <span class="text-sm capitalize">${status}</span>
+                    </div>
+                </div>
             </div>
-            <a href="./spot.html?id=${id}" class="text-blue-500 hover:underline">Check spot</a>
+    
+            <!-- Action Button -->
+            <a href="./spot.html?id=${id}" 
+               class="block mt-4 text-center text-sm font-medium text-white py-2 rounded-lg hover:bg-green-500 hover:text-white transition-all">
+                View Details
+            </a>
         </div>
     `);
     

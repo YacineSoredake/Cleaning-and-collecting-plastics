@@ -28,7 +28,7 @@ exports.addMarker = async (req, res) => {
 // Route to get all markers
 exports.markers = async (req, res) => {
     try {
-        const markers = await Marker.find();
+        const markers = await Marker.find({status:"uncollected"});
         // Convert GeoJSON coordinates to [latitude, longitude]
         const formattedMarkers = markers.map(marker => ({
             id:marker._id,

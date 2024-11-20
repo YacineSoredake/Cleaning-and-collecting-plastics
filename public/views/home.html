@@ -138,40 +138,59 @@
     </div>
 
     <div id="overlay" onclick="closeForm()">
-        <div id="marker-form" class="form-container" onclick="event.stopPropagation()">
-            <div class="flex flex-col justify-center gap-3">
-                <div class="flex gap-1 items-center">
-                    <img class="h-4" src="../icons/price-tag-svgrepo-com.svg" alt="">
-                    <label class="font-semibold text-black">Quantity:</label>
-                </div>
-                <input class="bg-lightgreen w-64" type="number" id="quantity" />
-                <div class="flex gap-1 items-center">
-                    <img class="h-4" src="../icons/price-tag-svgrepo-com (1).svg" alt="">
-                    <label class="font-semibold text-black">Price:</label>
-                </div>
-                <input class="bg-lightgreen w-64" type="number" id="price" />
-                <div class="flex gap-1 items-center">
-                    <img class="h-4" src="../icons/image-plus-svgrepo-com.svg" alt="">
-                    <label class="font-semibold text-black">Image:</label>
-                </div>
-                <div class="file-upload-wrapper flex flex-col justify-center">
-                    <input class="file-input" type="file" id="imageUrl" name="imageUrl" accept="image/*" onchange="previewImage(event)" />
-                    <button class="upload-btn" onclick="document.getElementById('imageUrl').click()">Choose File</button>
-                </div>
-                <div class="image-preview-container">
-                    <img id="imagePreview" class="image-preview" src="#" alt="Image Preview" style="display: none;" />
-                </div>
-                <div class="flex justify-around">
-                    <button class="bg-green p-1 rounded-md text-white font-semibold hover:bg-lightgreen" onclick="saveMarker()">
-                        <img class="h-8" src="../icons/check-square-svgrepo-com.svg" alt="">
+        <div id="marker-form" class="form-container bg-white rounded-lg p-6 shadow-lg max-w-sm mx-auto" onclick="event.stopPropagation()">
+            <h2 class="text-xl font-bold text-gray-700 mb-4 text-center">Add Marker</h2>
+            
+            <!-- Quantity Field -->
+            <div class="mb-4">
+                <label for="quantity" class="block text-sm font-semibold text-gray-600 mb-1">
+                    <img class="inline h-4 mr-1" src="../icons/price-tag-svgrepo-com.svg" alt="Quantity">
+                    Quantity:
+                </label>
+                <input type="number" id="quantity" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+    
+            <!-- Price Field -->
+            <div class="mb-4">
+                <label for="price" class="block text-sm font-semibold text-gray-600 mb-1">
+                    <img class="inline h-4 mr-1" src="../icons/price-tag-svgrepo-com (1).svg" alt="Price">
+                    Price:
+                </label>
+                <input type="number" id="price" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+    
+            <!-- Image Upload -->
+            <div class="mb-4">
+                <label for="imageUrl" class="block text-sm font-semibold text-gray-600 mb-1">
+                    <img class="inline h-4 mr-1" src="../icons/image-plus-svgrepo-com.svg" alt="Image">
+                    Image:
+                </label>
+                <input type="file" id="imageUrl" class="hidden" accept="image/*" onchange="previewImage(event)" />
+                <div class="flex items-center space-x-2">
+                    <button onclick="document.getElementById('imageUrl').click()" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
+                        Add Picture
                     </button>
-                    <button class="bg-red p-1 rounded-md text-white font-semibold hover:bg-red-300" onclick="closeForm()">
-                        <img class="h-8" src="../icons/cancel-svgrepo-com.svg" alt="">
-                    </button>
+                    <span id="fileName" class="text-sm text-gray-600">No file chosen</span>
                 </div>
+                <div class="mt-4">
+                    <img id="imagePreview" class="w-full rounded-lg hidden" alt="Image Preview" />
+                </div>
+            </div>
+    
+            <!-- Buttons -->
+            <div class="flex justify-between">
+                <button onclick="saveMarker()" class="flex items-center px-4 py-2 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 transition">
+                    <img class="h-5 mr-2" src="../icons/check-square-svgrepo-com.svg" alt="Save">
+                    Save
+                </button>
+                <button onclick="closeForm()" class="flex items-center px-4 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition">
+                    <img class="h-5 mr-2" src="../icons/cancel-svgrepo-com.svg" alt="Cancel">
+                    Cancel
+                </button>
             </div>
         </div>
     </div>
+    
     
 
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
@@ -195,8 +214,10 @@
                     imagePreview.src = e.target.result;
                     imagePreview.style.display = "block";
                 };
+                document.getElementById('fileName').style.display="none"
                 reader.readAsDataURL(file);
             } else {
+                document.getElementById('fileName').style.display="block"
                 imagePreview.style.display = "none";
             }
         }

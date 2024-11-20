@@ -20,7 +20,6 @@ const fetchSpots = async () => {
         }
 
         const spots = await response.json();
-        console.log(spots);
 
         // Display the spots on the page
         const spotContainer = document.getElementById('spot-content');
